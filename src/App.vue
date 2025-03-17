@@ -2,10 +2,13 @@
 
 <template>
   <changeArea />
-  <h1 class="text-[35px]">你好</h1>
+  <HotZone />
+  <FooterInfo />
 </template>
 
 <script setup lang="ts" name="App">
- import changeArea from './components/changeArea.vue';
+ import changeArea from './components/ChangeArea.vue';
+ import HotZone from './components/HotZone.vue';
+ import FooterInfo from './components/FooterInfo.vue';
 
 </script>
