@@ -18,7 +18,7 @@
               id="areaId"
               class="h-full opacity-75 font-black appearance-none p-3 w-full outline-none bg-amber-50"
             >
-              <option value="">{{changeAreaTitle}}</option>
+              <option value=""></option>
             </select>
             <div class="z-50 absolute right-3 inset-y-5 pointer-events-none">
               <img src="../assets/icons_down.png" />
@@ -30,8 +30,8 @@
 </template>
 
 <script setup lang="ts" name = "changeArea">
-import { ref } from 'vue';
 
-let changeAreaTitle = ref('--請選擇行政區--')
+
+
 
 </script>
