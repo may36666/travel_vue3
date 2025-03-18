@@ -15,8 +15,8 @@
 <script lang="ts" setup name="FooterInfo">
 import { ref } from "vue";
 
-let footTitle = ref('高雄旅遊網');
-let infoSource = ref('資料來源:高雄市政府');
+const footTitle = ref('高雄旅遊網');
+const infoSource = ref('資料來源:高雄市政府');
 
 
 </script>

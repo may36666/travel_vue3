@@ -18,9 +18,9 @@
   <script setup lang="ts" name = "hotZone">
 import { reactive, ref } from 'vue';
 
-  let hotButtonTitle = ref('熱門行政區');
+  const hotButtonTitle = ref('熱門行政區');
 
-  let buttonZone =reactive([
+  const buttonZone =reactive([
     {zone:'苓雅區',
     color:'bg-[#8A82CC]'
     ,id:'bz01'},
