@@ -13,20 +13,24 @@
             method="post"
             class="w-[45%] border-[3px] border-white rounded-sm relative"
           >
-            <select class="h-full opacity-75 font-black appearance-none p-3 w-full outline-none bg-amber-50">
+            <select class="h-full opacity-75 font-black appearance-none p-3 w-full outline-none bg-amber-50" ref="changeSelectRef" @change="getchangeVal(changeSelectRef.val.val)">
               <option v-for = "t in travelZone" :key="t.id" :value="t.zone">{{t.zone}}</option>
             </select>
             <div class="z-50 absolute right-3 inset-y-5 pointer-events-none">
               <img src="../assets/icons_down.png" />
+
             </div>
           </form>
+
         </div>
       </div>
     </header>
 </template>
 
 <script setup lang="ts" name = "changeArea">
-import { reactive } from 'vue';
+import { reactive, ref } from 'vue';
+const changeSelectRef = ref();
+
 
 
 const travelZone = reactive([{id:'z00',zone:'--請選擇行政區--'},
@@ -34,5 +38,7 @@ const travelZone = reactive([{id:'z00',zone:'--請選擇行政區--'},
 
 
 
+
+  defineProps(['getchangeVal']);
 
 </script>

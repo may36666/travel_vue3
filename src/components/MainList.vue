@@ -29,16 +29,9 @@
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 
-interface TravelItem {
-  Id: string;
-  Picture1: string;
-  Opentime: string;
-  Add: string;
-  Tel: string;
-  Ticketinfo: string;
-}
 
-const travelData = ref<TravelItem[]>([]);
+
+const travelData = ref([]);
 
 const list = async () => {
     try {
