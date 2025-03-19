@@ -8,7 +8,7 @@
  import changeArea from './components/ChangeArea.vue';
  import HotZone from './components/HotZone.vue';
  import FooterInfo from './components/FooterInfo.vue';
- import {useButtonStore} from '@/store/ButtonStore';
+ import {useButtonStore} from '@/store/buttonStore';
 
  const buttonStore = useButtonStore();
 
