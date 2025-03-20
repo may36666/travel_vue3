@@ -1,6 +1,6 @@
 <template>
 
-    <div class="grid grid-cols-3 gap-6 mx-[30px] place-items-center mt-[50px]" >
+    <div class="grid grid-cols-3 gap-6 mx-[30px] place-items-center mt-[50px] " >
       <div class="h-[400px]  shadow-xl w-[90%] text-[6px] md:text-base" v-for="item in travelData" :key="item.Id">
         <img :src="item.Picture1" class="h-1/2 w-full" />
         <ul class="p-3 space-y-5 h-1/2 content-center">

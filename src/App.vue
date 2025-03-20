@@ -9,6 +9,7 @@
           <select
             class="h-full opacity-75 font-black appearance-none p-3 w-full outline-none bg-amber-50"
             ref="changeSelectRef"
+            @change="selectChange"
           >
             <option v-for="t in travelZone" :key="t.id" :value="t">{{ t }}</option>
           </select>
@@ -39,7 +40,7 @@
     </div>
   </div>
   <main class="container mx-auto">
-    <div class="text-center text-3xl" ></div>
+    <div class="text-center text-3xl mt-[50px]" >{{ selectVal }}</div>
     <MainList :travelData="travelData"/>
   </main>
 
@@ -47,7 +48,7 @@
 </template>
 
 <script setup lang="ts" name="App">
-import { ref, reactive, onMounted, computed } from "vue";
+import { ref, reactive, onMounted, computed, onUpdated } from "vue";
 import axios from "axios";
 import FooterInfo from "./components/FooterInfo.vue";
 import { useButtonStore } from "@/store/buttonStore";
@@ -72,7 +73,6 @@ async function changeTravelList(){
     });
     const zoneToSet = new Set(zones);
     Object.assign(travelZone,[...zoneToSet]);
-    console.log(travelZone);
   } catch (error) {
     console.error("Error fetching cards:", error);
   }
@@ -97,21 +97,36 @@ let select = computed({
   }
 })
 
+ let selectChange = function (){
+  select.value =changeSelectRef.value.value;
+}
+
 
 const list = async () => {
   try {
     const { data } = await axios.get(
       "https://raw.githubusercontent.com/hexschool/KCGTravel/master/datastore_search.json"
     );
-    travelData.value = data.result.records;
+    let temp=[];
 
-  } catch (error) {
+    if(!select.value){travelData.value = data.result.records;}
+    else{
+      temp = data.result.records.filter(function(value){
+        return value.Zone === selectVal.value;
+      })
+      console.log(temp);
+      travelData.value =temp;
+    }
+
+}
+ catch (error) {
     console.error("Error fetching cards:", error);
   }
 };
 
 onMounted(() => {
-  list();
   changeTravelList();
+  list();
 });
+
 </script>
