@@ -24,7 +24,10 @@
     <div class="flex justify-center mt-[4%]">
       <div class="w-[80%] h-[100px] bg-white rounded-md shadow pt-2 pl-5 font-black">
         {{ hotButtonTitle }}
-        <div class="mt-[10px] h-[50%] px-5 lg:space-x-[20px] lg:text-xl">
+        <div class="mt-[10px] h-[50%] px-5 lg:space-x-[20px] lg:text-xl"
+        ref="hotButtonRef"
+        @click="hotButtonChange"
+        >
           <button
             v-for="b in buttonZone"
             type="button"
@@ -48,7 +51,7 @@
 </template>
 
 <script setup lang="ts" name="App">
-import { ref, reactive, onMounted, computed, onUpdated } from "vue";
+import { ref, reactive, onMounted, computed } from "vue";
 import axios from "axios";
 import FooterInfo from "./components/FooterInfo.vue";
 import { useButtonStore } from "@/store/buttonStore";
@@ -61,25 +64,10 @@ const changeSelectRef = ref();
 const travelData = ref([]);
 const travelZone = reactive([
 ]);
-async function changeTravelList(){
-  try {
-    const { data } = await axios.get(
-      "https://raw.githubusercontent.com/hexschool/KCGTravel/master/datastore_search.json"
-    );
-    let zones=[];
-    zones.push('--請選擇行政區--');
-    data.result.records.forEach((item) => {
-        zones.push(item.Zone);
-    });
-    const zoneToSet = new Set(zones);
-    Object.assign(travelZone,[...zoneToSet]);
-  } catch (error) {
-    console.error("Error fetching cards:", error);
-  }
 
-}
 
 const hotButtonTitle = ref("熱門行政區");
+const hotButtonRef = ref();
 
 const buttonZone = reactive([
   { zone: "苓雅區", color: "bg-[#8A82CC]", id: "bz01" },
@@ -100,6 +88,11 @@ let select = computed({
  let selectChange = function (){
   select.value =changeSelectRef.value.value;
 }
+let hotButtonChange = function () {
+  let hotButtonList = hotButtonRef.value;
+  console.log(hotButtonList);
+  select.value = hotSelect;
+};
 
 
 const list = async () => {
@@ -107,6 +100,15 @@ const list = async () => {
     const { data } = await axios.get(
       "https://raw.githubusercontent.com/hexschool/KCGTravel/master/datastore_search.json"
     );
+
+    let zones=[];
+    zones.push('--請選擇行政區--');
+    data.result.records.forEach((item) => {
+        zones.push(item.Zone);
+    });
+    const zoneToSet = new Set(zones);
+    Object.assign(travelZone,[...zoneToSet]);
+
     let temp=[];
 
     if(!select.value){travelData.value = data.result.records;}
@@ -125,7 +127,6 @@ const list = async () => {
 };
 
 onMounted(() => {
-  changeTravelList();
   list();
 });
 
