@@ -8,10 +8,9 @@
         <form method="post" class="w-[45%] border-[3px] border-white rounded-sm relative">
           <select
             class="h-full opacity-75 font-black appearance-none p-3 w-full outline-none bg-amber-50"
-            ref="changeSelectRef"
-            @change="selectChange"
+            v-model="selectVal"
           >
-            <option v-for="t in travelZone" :key="t.id" :value="t">{{ t }}</option>
+            <option v-for="t in travelZoneSelection" :key="t.value" :value="t.value" :disabled="t.value === undefined">{{ t.text }}</option>
           </select>
           <div class="z-50 absolute right-3 inset-y-5 pointer-events-none">
             <img src="./assets/icons_down.png" />
@@ -32,6 +31,7 @@
             :class="b.color"
             class="border-0 rounded-md text-white w-[20%] lg:w-[16%] h-full cursor-pointer"
             :value="b.zone"
+            @click="selectVal = b.zone"
           >
             {{ b.zone }}
           </button>
@@ -41,43 +41,29 @@
   </div>
   <main class="container mx-auto">
     <div class="text-center text-3xl mt-[50px]" >{{ selectVal }}</div>
-    <MainList :travelData="travelData"/>
+    <div class="grid grid-cols-3 gap-6 mx-[30px] place-items-center mt-[50px] " >
+      <template v-for="item in listFilterCard " :key="item.id">
+        <MainList :travelData="item"/>
+      </template>
+
+    </div>
   </main>
 
   <FooterInfo />
 </template>
 
 <script setup lang="ts" name="App">
-import { ref, reactive, onMounted, computed, onUpdated } from "vue";
+import { ref, reactive, onMounted, computed } from "vue";
 import axios from "axios";
 import FooterInfo from "./components/FooterInfo.vue";
 import { useButtonStore } from "@/store/buttonStore";
 import MainList from "./components/MainList.vue";
 
 
-const selectVal = ref("");
-const changeSelectRef = ref();
 
+const selectVal = ref();
 const travelData = ref([]);
-const travelZone = reactive([
-]);
-async function changeTravelList(){
-  try {
-    const { data } = await axios.get(
-      "https://raw.githubusercontent.com/hexschool/KCGTravel/master/datastore_search.json"
-    );
-    let zones=[];
-    zones.push('--請選擇行政區--');
-    data.result.records.forEach((item) => {
-        zones.push(item.Zone);
-    });
-    const zoneToSet = new Set(zones);
-    Object.assign(travelZone,[...zoneToSet]);
-  } catch (error) {
-    console.error("Error fetching cards:", error);
-  }
-
-}
+const travelZone = ref([]);
 
 const hotButtonTitle = ref("熱門行政區");
 
@@ -88,18 +74,6 @@ const buttonZone = reactive([
   { zone: "鹽埕區", color: "bg-[#559AC8]", id: "bz04" },
 ]);
 
-let select = computed({
-  get(){
-    return selectVal.value;
-  },
-  set(value: string){
-    selectVal.value = value;
-  }
-})
-
- let selectChange = function (){
-  select.value =changeSelectRef.value.value;
-}
 
 
 const list = async () => {
@@ -107,25 +81,40 @@ const list = async () => {
     const { data } = await axios.get(
       "https://raw.githubusercontent.com/hexschool/KCGTravel/master/datastore_search.json"
     );
-    let temp=[];
+    travelData.value = data.result.records;
+    console.log(travelData.value);
 
-    if(!select.value){travelData.value = data.result.records;}
-    else{
-      temp = data.result.records.filter(function(value){
-        return value.Zone === selectVal.value;
-      })
-      console.log(temp);
-      travelData.value =temp;
-    }
-
+    const mapZone = travelData.value.map((item)=>{return item.Zone});
+    const setZone = [...new Set(mapZone)];
+    travelZone.value = setZone;
+    travelZone.value.unshift('--請選擇行政區--');
 }
  catch (error) {
     console.error("Error fetching cards:", error);
   }
 };
 
+const travelZoneSelection = computed(()=>{
+   return travelZone.value.map((item,index)=>{
+    return{
+      text:item,
+      value:index === 0 ? undefined : item
+    }
+   })
+})
+
+const listFilterCard = computed(()=>{
+  if(selectVal.value){
+    return travelData.value.filter((item)=>{
+      return item.Zone === selectVal.value
+    })
+  }
+  return travelData.value
+})
+
+
+
 onMounted(() => {
-  changeTravelList();
   list();
 });
 
