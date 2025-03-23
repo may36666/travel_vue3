@@ -23,7 +23,10 @@
     <div class="flex justify-center mt-[4%]">
       <div class="w-[80%] h-[100px] bg-white rounded-md shadow pt-2 pl-5 font-black">
         {{ hotButtonTitle }}
-        <div class="mt-[10px] h-[50%] px-5 lg:space-x-[20px] lg:text-xl">
+        <div class="mt-[10px] h-[50%] px-5 lg:space-x-[20px] lg:text-xl"
+        ref="hotButtonRef"
+        @click="hotButtonChange"
+        >
           <button
             v-for="b in buttonZone"
             type="button"
@@ -66,6 +69,7 @@ const travelData = ref([]);
 const travelZone = ref([]);
 
 const hotButtonTitle = ref("熱門行政區");
+const hotButtonRef = ref();
 
 const buttonZone = reactive([
   { zone: "苓雅區", color: "bg-[#8A82CC]", id: "bz01" },
