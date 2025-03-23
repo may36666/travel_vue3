@@ -2,6 +2,7 @@
   <div
     class="h-[400px] shadow-xl w-[90%] text-[6px] md:text-base"
   >
+
     <img :src="travelData.Picture1" class="h-1/2 w-full" />
     <ul class="p-3 space-y-5 h-1/2 content-center">
       <li class="flex flex-row relative space-x-2">
@@ -27,6 +28,7 @@
 
 <script setup lang="ts" name="HotList">
 import { defineProps } from "vue";
+ 
 
 defineProps(["travelData"]);
 </script>

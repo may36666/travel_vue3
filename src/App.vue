@@ -43,6 +43,7 @@
     </div>
   </div>
   <main class="container mx-auto">
+    <RouterView></RouterView>
     <div class="text-center text-3xl mt-[50px]" >{{ selectVal }}</div>
     <div class="grid grid-cols-3 gap-6 mx-[30px] place-items-center mt-[50px] " >
       <template v-for="item in listFilterCard " :key="item.id">
@@ -61,6 +62,8 @@ import axios from "axios";
 import FooterInfo from "./components/FooterInfo.vue";
 import { useButtonStore } from "@/store/buttonStore";
 import MainList from "./components/MainList.vue";
+import { RouterView } from "vue-router";
+
 
 
 
@@ -87,9 +90,8 @@ const list = async () => {
     );
     //接收傳來的資料
     travelData.value = data.result.records;
-    console.log(travelData.value);
 
-    //做下拉選單資料，用map產生回傳有區域的新array再用set去除重複值並使用unshift將選擇行政區傳到array的第一個
+    //做下拉選單資料，用map產生回傳有區域的新array再用set去除重複值並使用unshift將選擇行政區的字串傳到array的第一個
     const mapZone = travelData.value.map((item)=>{return item.Zone});
     const setZone = [...new Set(mapZone)];
     travelZone.value = setZone;
