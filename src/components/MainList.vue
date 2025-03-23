@@ -18,7 +18,7 @@
           <img src="../assets/icons_phone.png" /><span>{{ travelData.Tel }}</span>
         </div>
         <div class="col-span-2 flex flex-row space-x-2">
-          <img src="../assets/icons_tag.png" alt="" /><span>{{ travelData.Ticketinfo }}</span>
+          <img src="../assets/icons_tag.png" alt="tag'''" /><span>{{ travelData.Ticketinfo }}</span>
         </div>
       </li>
     </ul>

@@ -81,9 +81,11 @@ const list = async () => {
     const { data } = await axios.get(
       "https://raw.githubusercontent.com/hexschool/KCGTravel/master/datastore_search.json"
     );
+    //接收傳來的資料
     travelData.value = data.result.records;
     console.log(travelData.value);
 
+    //做下拉選單資料，用map產生回傳有區域的新array再用set去除重複值並使用unshift將選擇行政區傳到array的第一個
     const mapZone = travelData.value.map((item)=>{return item.Zone});
     const setZone = [...new Set(mapZone)];
     travelZone.value = setZone;
@@ -94,6 +96,7 @@ const list = async () => {
   }
 };
 
+//計算屬性做下拉選單將資料用map做成物件陣列
 const travelZoneSelection = computed(()=>{
    return travelZone.value.map((item,index)=>{
     return{
@@ -103,10 +106,11 @@ const travelZoneSelection = computed(()=>{
    })
 })
 
+//回傳給卡片的資料，如selectVal沒有值則直接回傳資料，如有則回傳跟選擇的區域一樣的資料
 const listFilterCard = computed(()=>{
   if(selectVal.value){
     return travelData.value.filter((item)=>{
-      return item.Zone === selectVal.value
+      return item.Zone === selectVal.value;
     })
   }
   return travelData.value
