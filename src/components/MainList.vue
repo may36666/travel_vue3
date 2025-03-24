@@ -1,8 +1,7 @@
 <template>
   <div
-    class="h-[400px] shadow-xl w-[90%] text-[6px] md:text-base"
+    class="h-[400px] shadow-xl w-[100%] text-[6px] md:text-base"
   >
-
     <img :src="travelData.Picture1" class="h-1/2 w-full" />
     <ul class="p-3 space-y-5 h-1/2 content-center">
       <li class="flex flex-row relative space-x-2">
@@ -19,7 +18,7 @@
           <img src="../assets/icons_phone.png" /><span>{{ travelData.Tel }}</span>
         </div>
         <div class="col-span-2 flex flex-row space-x-2">
-          <img src="../assets/icons_tag.png" alt="tag'''" /><span>{{ travelData.Ticketinfo }}</span>
+          <img src="../assets/icons_tag.png" alt="tag" /><span>{{ travelData.Ticketinfo }}</span>
         </div>
       </li>
     </ul>
@@ -28,7 +27,7 @@
 
 <script setup lang="ts" name="HotList">
 import { defineProps } from "vue";
- 
+
 
 defineProps(["travelData"]);
 </script>

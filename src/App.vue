@@ -22,10 +22,9 @@
   <div class="container mx-auto">
     <div class="flex justify-center mt-[4%]">
       <div class="w-[80%] h-[100px] bg-white rounded-md shadow pt-2 pl-5 font-black">
-        {{ hotButtonTitle }}
+        熱門行政區
         <div class="mt-[10px] h-[50%] px-5 lg:space-x-[20px] lg:text-xl"
         ref="hotButtonRef"
-        @click="hotButtonChange"
         >
           <button
             v-for="b in buttonZone"
@@ -46,13 +45,18 @@
     <RouterView></RouterView>
     <div class="text-center text-3xl mt-[50px]" >{{ selectVal }}</div>
     <div class="grid grid-cols-3 gap-6 mx-[30px] place-items-center mt-[50px] " >
-      <template v-for="item in listFilterCard " :key="item.id">
-        <MainList :travelData="item"/>
+      <template v-for="item in listFilterCard " :key="item._id">
+
+          <RouterLink :to="{ name: '卡片資訊', params: {
+            id: item._id,
+          }}" class="w-[90%] ">
+          <MainList :travelData="item"/>
+          </RouterLink>
+
       </template>
 
     </div>
   </main>
-
   <FooterInfo />
 </template>
 
@@ -62,7 +66,7 @@ import axios from "axios";
 import FooterInfo from "./components/FooterInfo.vue";
 import { useButtonStore } from "@/store/buttonStore";
 import MainList from "./components/MainList.vue";
-import { RouterView } from "vue-router";
+import { RouterView,RouterLink } from "vue-router";
 
 
 
@@ -71,7 +75,6 @@ const selectVal = ref();
 const travelData = ref([]);
 const travelZone = ref([]);
 
-const hotButtonTitle = ref("熱門行政區");
 const hotButtonRef = ref();
 
 const buttonZone = reactive([
@@ -90,7 +93,7 @@ const list = async () => {
     );
     //接收傳來的資料
     travelData.value = data.result.records;
-
+    console.log(travelData.value);
     //做下拉選單資料，用map產生回傳有區域的新array再用set去除重複值並使用unshift將選擇行政區的字串傳到array的第一個
     const mapZone = travelData.value.map((item)=>{return item.Zone});
     const setZone = [...new Set(mapZone)];

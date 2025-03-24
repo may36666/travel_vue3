@@ -5,9 +5,11 @@ const router =createRouter({
   history:createWebHistory(),
   routes:[
     {
-      path:'/CardDetail',
-      component:CardDetail
-    }
+      path:'/CardDetail/:id',
+      name:'卡片資訊',
+      component:CardDetail,
+      props:true
+    },
   ]
 })
 
