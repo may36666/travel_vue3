@@ -11,7 +11,8 @@
     "preview": "vite preview",
     "build-only": "vite build",
     "type-check": "vue-tsc --build",
-    "lint": "eslint . --fix"
+    "lint": "eslint . --fix",
+    "deploy": "npm run build && node ./deploy/ghpages.js"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.0.14",
@@ -30,6 +31,7 @@
     "eslint": "^9.21.0",
     "eslint-plugin-vue": "~10.0.0",
     "express": "^4.21.2",
+    "gh-pages": "^6.3.0",
     "jiti": "^2.4.2",
     "npm-run-all2": "^7.0.2",
     "typescript": "~5.8.0",
