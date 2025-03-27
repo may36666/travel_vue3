@@ -2,7 +2,7 @@
   <div class="container mx-auto">
   <div
     class="h-[600px] shadow-xl w-[100%] text-[6px] md:text-base mt-[50px] mb-[200px]"
-    v-for="b in buttonStore.datailDataList"
+    v-for="b in buttonStore.detailDataList"
     :key="b._id"
   >
     <img :src="b.Picture1" class="h-1/2 w-full" />

@@ -80,8 +80,8 @@
 </template>
 
 <script setup lang="ts" name="Home">
-import { ref, onMounted, computed, reactive, onUpdated } from "vue";
-import axios from "axios";
+import { ref, onMounted, computed, reactive } from "vue";
+import axios from 'axios';
 import MainList from "../components/MainList.vue";
 import { RouterLink } from "vue-router";
 import {useButtonStore} from "@/store/buttonStore"
@@ -106,6 +106,7 @@ const list = async () => {
     const { data } = await axios.get(
       "https://raw.githubusercontent.com/hexschool/KCGTravel/master/datastore_search.json"
     );
+    console.log(data.result.records);
     //接收傳來的資料
     travelData.value = data.result.records;
     //做下拉選單資料，用map產生回傳有區域的新array再用set去除重複值並使用unshift將選擇行政區的字串傳到array的第一個
