@@ -8,6 +8,7 @@ import VueSetupExtend from 'vite-plugin-vue-setup-extend'
 
 // https://vite.dev/config/
 export default defineConfig({
+  base:'/travel_vue3/',
   plugins: [
     vue(),
     vueDevTools(),
