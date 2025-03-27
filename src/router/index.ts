@@ -1,9 +1,9 @@
-import {createRouter,createWebHistory} from 'vue-router'
+import {createRouter,createWebHashHistory} from 'vue-router'
 import CardDetail from '@/pages/CardDetail.vue'
 import Home from "@/pages/Home.vue"
 
 const router =createRouter({
-  history:createWebHistory(),
+  history:createWebHashHistory(),
   routes:[
     {
       path:'/',
