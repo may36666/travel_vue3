@@ -70,7 +70,7 @@
             },
           }"
           class="w-[90%]"
-          @click="buttonSore.selectId =item._id"
+          @click="buttonStore.selectId =item._id"
         >
           <MainList :travelData="item" />
         </RouterLink>
@@ -89,7 +89,7 @@ const selectVal = ref();
 const travelData = ref([]);
 const travelZone = ref([]);
 
-const buttonSore = useButtonStore();
+const buttonStore = useButtonStore();
 const hotButtonRef = ref();
 
 const buttonZone = reactive([
@@ -106,14 +106,16 @@ const list = async () => {
     const { data } = await axios.get(
       "https://raw.githubusercontent.com/hexschool/KCGTravel/master/datastore_search.json"
     );
-    console.log(data.result.records);
+
     //接收傳來的資料
     travelData.value = data.result.records;
+    buttonStore.detailData = data.result.records;
     //做下拉選單資料，用map產生回傳有區域的新array再用set去除重複值並使用unshift將選擇行政區的字串傳到array的第一個
     const mapZone = travelData.value.map((item)=>{return item.Zone});
     const setZone = [...new Set(mapZone)];
     travelZone.value = setZone;
     travelZone.value.unshift('--請選擇行政區--');
+
 }
  catch (error) {
     console.error("Error fetching cards:", error);
@@ -144,7 +146,6 @@ const listFilterCard = computed(()=>{
 
 onMounted(() => {
   list();
-  buttonSore.detailList();
 });
 
 
