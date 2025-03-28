@@ -1,10 +1,10 @@
 import {createRouter,createWebHistory} from 'vue-router'
 import CardDetail from '@/pages/CardDetail.vue'
 import Home from "@/pages/Home.vue"
-import process from 'process'
+
 
 const router =createRouter({
-  history:createWebHistory(process.env.BASE_URL),
+  history:createWebHistory(),
   routes:[
     {
       path:'/',
